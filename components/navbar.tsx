@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0">
             {/* Load the logo image using the Image component */}
-            <Image src="/1.png" alt="Logo" width={50} height={50}/>
+            <Image src="/1.png" alt="Logo" width={50} height={50} />
           </div>
           <div className="hidden md:block">
             <ul className="flex space-x-4">

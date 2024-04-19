@@ -1,6 +1,6 @@
 // Home.tsx
 import React from 'react';
-import Navbar from './navbar'; // Import the Navbar component
+import Navbar from '@/components/navbar'; // Import the Navbar component
 
 const Home: React.FC = () => {
   return (
