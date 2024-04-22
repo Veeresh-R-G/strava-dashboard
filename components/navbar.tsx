@@ -13,8 +13,8 @@ const Navbar: React.FC = () => {
           </div>
           <div className="hidden md:block">
             <ul className="flex space-x-4">
-              <li><a href="#" className="text-white hover:text-gray-300 text-lg ">Home</a></li>
-              <li><a href="#" className="text-white hover:text-gray-300">Leaderboard</a></li>
+              <li><a href="/" className="text-white hover:text-gray-300 text-lg ">Home</a></li>
+              <li><a href="/leaderboard" className="text-white hover:text-gray-300">Leaderboard</a></li>
               <li><a href="#" className="text-white hover:text-gray-300">About us</a></li>
               <li><a href="#" className="text-white hover:text-gray-300">Contact</a></li>
               {/* Add Strava icon linking to the club's Strava page */}
