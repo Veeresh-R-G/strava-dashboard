@@ -14,14 +14,15 @@ datasource db {
 }
 
 model Metadata {
-  id                  Int @id @default(autoincrement())
+  id                  Int   @id @default(autoincrement())
   previous_activities Int
+  total_distance      Float
 }
 
 model Runner {
   id               Int    @id @default(autoincrement())
   athelete_id      Int
-  athelete_name    Int
+  athelete_name    String
   strava_profile   String
   total_kilometers Float
   photoUrl         String
