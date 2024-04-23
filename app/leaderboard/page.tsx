@@ -5,13 +5,20 @@ import Navbar from '@/components/navbar'; // Import the Navbar component
 import React, { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 
+interface MyObject {
+  name: string;
+  value: number;
+}
+
+
+
 const Leaderboard: React.FC = () => {
-  const [data, setData] = useState<any>([])
+  const [data, setData] = useState<MyObject[]>([]);
 
   useEffect(() => {
     axios.get("http://localhost:3000/api/get_stuff")
       .then((res) => {
-        let temp: any = []
+        let temp: MyObject[] = [];
         for (const [name, value] of Object.entries(res.data?.data)) {
 
           // Create an object with keys "name" and "value"
@@ -22,11 +29,14 @@ const Leaderboard: React.FC = () => {
           const obj = {
             name: name,
             // Type assertion to specify 'value' as number
-            value: tempVal
+            value: tempVal/1000
           };
           temp.push(obj)
         }
-
+        temp.sort((a: MyObject, b: MyObject) => {
+         return b.value - a.value
+        })
+        console.log(typeof temp)
         setData(temp)
       })
       .catch((err) => {
@@ -34,13 +44,6 @@ const Leaderboard: React.FC = () => {
 
       })
   }, []);
-
-
-  data.sort((a: any, b: any) => {
-    b["value"] - a["value"]
-  })
-
-  console.log(data);
 
   return (
     <div>
@@ -52,9 +55,7 @@ const Leaderboard: React.FC = () => {
             <div>Distance</div>
           </div>
           <div className=''>
-            {data?.sort((a: any, b: any) => {
-              b["value"] - a["value"]
-            }).map((item: any, index: any) => {
+            {data.map((item: any, index: any) => {
               return (
 
                 <div key={index} className='grid grid-cols-2'>
