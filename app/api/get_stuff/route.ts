@@ -24,11 +24,9 @@ const fetchData = async (access_token: string) => {
     console.log(newData)
     currentActivities += newData.length
     if (newData.length === 0) {
-        // No more data available, exit the loop
         break;
       }
 
-      // Aggregate distances by athlete name
       newData.forEach(({ athlete, distance }) => {
         const name = `${athlete.firstname} ${athlete.lastname}`;
         aggregatedData[name] = (aggregatedData[name] || 0) + distance;
@@ -41,49 +39,30 @@ const fetchData = async (access_token: string) => {
         name,
         totalAthleteDistance
       }));
-    // Set the combined data in state
-    return {formattedData, currentActivities, totalDistance};
+    return {aggregatedData, currentActivities, totalDistance};
     
   } catch (error: any) {
     console.log('Error fetching data:', error);
-    // Handle error, e.g., set loading to false or show an error message
   }
 };
 
-export async function PUT() {
-  try {
-    const accessToken = await getAccessToken();
-    console.log(accessToken);
+export async function GET(){
+    try{
+        const accessToken = await getAccessToken();
+        const resp: { aggregatedData:{ [key: string]: number } , currentActivities: number, totalDistance: number } | undefined = await fetchData(accessToken);
+        const data = resp?.aggregatedData ?? {};
+        console
+        const totalDistance = resp?.totalDistance;
+        const table = await prisma.runner.findMany({})
+        table.forEach(table => {
+            console.log(table.athelete_name,data[table.athelete_name] , table.total_kilometers)
+            data[table.athelete_name] = (data[table.athelete_name]/1000 - table.total_kilometers) || 0
+        })
+        //console.log(data)
+        return Response.json(data)
+      }
+        catch (error: any) {
+            console.log('Error fetching data:', error);
+          }
+        }
 
-    const resp: { formattedData: { name: string; totalAthleteDistance: number }[], currentActivities: number, totalDistance: number } | undefined = await fetchData(accessToken);
-    const data = resp?.formattedData ?? [];
-    const currentActivities = resp?.currentActivities;
-    let totalDistance = resp?.totalDistance;
-    console.log(data);
-    for (const { name, totalAthleteDistance } of data) {      
-      const runner = await prisma.runner.findFirst({
-        where: {
-          athelete_name: name,
-        },
-      });
-      console.log(runner?.id);
-      await prisma.runner.update({
-        where: { id: runner?.id},
-        data: { total_kilometers: totalAthleteDistance/1000 },
-      });
-    
-    }
-    
-    //console.log("updatedRunners", updatedRunners);
-    
-    // Return a successful response with the updated runners
-    return Response.json("hello");
-  } catch (error) {
-    console.error('Error updating runners:', error);
-
-    // Return an error response
-    return Response.error();
-  }
-};
-
-  
