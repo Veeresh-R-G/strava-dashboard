@@ -69,7 +69,7 @@ export async function PUT() {
       console.log(runner?.id);
       await prisma.runner.update({
         where: { id: runner?.id},
-        data: { total_kilometers: totalAthleteDistance/1000 },
+        data: { total_kilometers: totalAthleteDistance },
       });
     
     }

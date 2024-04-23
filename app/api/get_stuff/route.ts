@@ -49,17 +49,20 @@ const fetchData = async (access_token: string) => {
 export async function GET(){
     try{
         const accessToken = await getAccessToken();
+        console.log(accessToken);
+        
         const resp: { aggregatedData:{ [key: string]: number } , currentActivities: number, totalDistance: number } | undefined = await fetchData(accessToken);
         const data = resp?.aggregatedData ?? {};
-        console
+      
         const totalDistance = resp?.totalDistance;
+
         const table = await prisma.runner.findMany({})
         table.forEach(table => {
-            console.log(table.athelete_name,data[table.athelete_name] , table.total_kilometers)
-            data[table.athelete_name] = (data[table.athelete_name]/1000 - table.total_kilometers) || 0
+            console.log(table.athelete_name,data[table.athelete_name] , table.total_kilometers, data[table.athelete_name], (table.total_kilometers),Number(data[table.athelete_name]))
+            data[table.athelete_name] = (Number(data[table.athelete_name]) - Number(table.total_kilometers)) || 0
         })
-        //console.log(data)
-        return Response.json(data)
+        console.log(data)
+        return Response.json({"data" : data})
       }
         catch (error: any) {
             console.log('Error fetching data:', error);
