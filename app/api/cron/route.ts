@@ -14,7 +14,7 @@ const fetchData = async (access_token: string) => {
             `https://www.strava.com/api/v3/clubs/1235636/activities?page=${page}&per_page=100`,
             {
               headers: {
-                'Authorization': `Bearer 1c5f94eb3b17d1a7bb93c432ec319abc433a5b70`
+                'Authorization': `Bearer ${access_token}`
               }
             }
           );
