@@ -29,14 +29,14 @@ const Leaderboard: React.FC = () => {
           const obj = {
             name: name,
             // Type assertion to specify 'value' as number
-            value: tempVal/1000
+            value: tempVal / 1000
           };
           temp.push(obj)
         }
         temp.sort((a: MyObject, b: MyObject) => {
-         return b.value - a.value
+          return b.value - a.value
         })
-        console.log(typeof temp)
+
         setData(temp)
       })
       .catch((err) => {
@@ -48,25 +48,31 @@ const Leaderboard: React.FC = () => {
   return (
     <div>
       <Navbar />
-      {data ?
-        <div className=''>
-          <div className='grid grid-cols-2'>
-            <div>Name</div>
-            <div>Distance</div>
-          </div>
+      {data.length === 0 ?
+        <div className='flex items-center justify-center'>
           <div className=''>
-            {data.map((item: any, index: any) => {
-              return (
+            {/* Table Headers */}
+            <div className='flex'>
+              <div className='py-5 bg-gray-100/60 p-2 pl-10 text-xs md:text-base border border-t-0 border-r-0 border-l-0 border-gray-300'>#</div>
+              <div className='py-5 bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300'>Name</div>
+              <div className='py-5 bg-gray-100/60 w-20 text-xs text-center md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300'>Distance</div>
+            </div>
 
-                <div key={index} className='grid grid-cols-2'>
-                  {/* {JSON.stringify(item)} */}
-                  <div>{item.name}</div>
-                  <div>{item.value}</div>
-                </div>
-              )
-            })}
+            {/* Table content */}
+            <div className=''>
+              {data?.map((item: any, index: any) => {
+                return (
+
+                  <div key={index} className='flex'>
+                    {/* {JSON.stringify(item)} */}
+                    <div className='bg-gray-100/60 p-2 pl-10 border text-xs md:text-base border-t-0 border-r-0 border-l-0 border-gray-300'>{index + 1}.</div>
+                    <div className='bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300'>{item.name}</div>
+                    <div className='bg-gray-100/60 w-20 text-xs text-center md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300'>{String(item.value).slice(0, 5)}</div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
-          {/* {JSON.stringify(data)} */}
         </div> : <div>
           Loading
         </div>}
