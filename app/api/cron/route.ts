@@ -21,7 +21,7 @@ const fetchData = async (access_token: string) => {
 
     console.log("im here")  
     const newData: { athlete: { firstname: string; lastname: string }; distance: number }[] = response.data;
-    console.log(newData)
+    // console.log(newData)
     currentActivities += newData.length
     if (newData.length === 0) {
         // No more data available, exit the loop
@@ -53,20 +53,20 @@ const fetchData = async (access_token: string) => {
 export async function PUT() {
   try {
     const accessToken = await getAccessToken();
-    console.log(accessToken);
+    // console.log(accessToken);
 
     const resp: { formattedData: { name: string; totalAthleteDistance: number }[], currentActivities: number, totalDistance: number } | undefined = await fetchData(accessToken);
     const data = resp?.formattedData ?? [];
     const currentActivities = resp?.currentActivities;
     let totalDistance = resp?.totalDistance;
-    console.log(data);
+    // console.log(data);
     for (const { name, totalAthleteDistance } of data) {      
       const runner = await prisma.runner.findFirst({
         where: {
           athelete_name: name,
         },
       });
-      console.log(runner?.id);
+      // console.log(runner?.id);
       await prisma.runner.update({
         where: { id: runner?.id},
         data: { total_kilometers: totalAthleteDistance },

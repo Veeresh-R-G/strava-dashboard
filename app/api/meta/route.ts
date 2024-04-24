@@ -8,7 +8,7 @@ export async function GET(){
         }
     })
 
-    console.log(resp);
+    // console.log(resp);
     return Response.json({"message": "Inserted Properly"})
     
 }

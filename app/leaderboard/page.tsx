@@ -44,11 +44,13 @@ const Leaderboard: React.FC = () => {
 
       })
   }, []);
+  // console.log("data ===>", data);
 
   return (
     <div>
       <Navbar />
-      {data.length === 0 ?
+      {/* {JSON.stringify(data)} */}
+      {data.length !== 0 ?
         <div className='flex items-center justify-center'>
           <div className=''>
             {/* Table Headers */}

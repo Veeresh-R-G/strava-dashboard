@@ -14,14 +14,13 @@ const options = {
 
 const req = http.request(options, function (res) {
   const chunks = [];
-  console.log(typeof chunks);
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
     const body = Buffer.concat(chunks);
-    // console.log(body.toString());
+
     console.log(JSON.parse(body.toString()).length);
     fs.writeFile("club_member.json", body.toString(), (err) => {
       if (err) {
