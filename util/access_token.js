@@ -1,7 +1,6 @@
 export default async function getAccessToken() {
   let headersList = {
     Accept: "*/*",
-    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
     "Content-Type": "application/x-www-form-urlencoded",
   };
 
@@ -15,6 +14,14 @@ export default async function getAccessToken() {
   });
 
   let data = await response.text();
-  //   console.log(JSON.parse(data).access_token);
   return JSON.parse(data).access_token;
 }
+
+
+//LOGIN -> Auth Code
+
+//AUTH CODE -> oauth/token grant-type=authorization
+//get accesstoken, expiry, refreshtoken
+//hit api endpoints
+
+//refresh access token via refreshtoken

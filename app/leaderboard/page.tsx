@@ -41,7 +41,6 @@ const Leaderboard: React.FC = () => {
       })
       .catch((err) => {
         console.log("Error Fetching the data : ", err);
-
       })
   }, []);
   // console.log("data ===>", data);

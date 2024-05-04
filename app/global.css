@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.login-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bttn-login{
+    padding: 1em;
+    text-align: center;
+    color: white;
+    border: solid 1px black;
+    background: #fc6203;
+    border-radius: 15px;
+}
