@@ -2,13 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/navbar';
 import useAuth from "../util/useAuth"
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export default function Home({authCode}: {authCode: string}){
-  const accessToken: string = useAuth(authCode) as unknown as string 
+  const authInfo: any = useAuth(authCode) as unknown as any
+  console.log(authInfo)
 
+  const accessToken: string = authInfo?.access_token
   console.log(accessToken)
-
   // const [athleteData, setAtheleteData] = useState()
 
   useEffect(() => {
