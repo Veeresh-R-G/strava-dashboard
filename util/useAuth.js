@@ -5,19 +5,19 @@ export default function useAuth(code){
     const [accessToken, setAccessToken] = useState()
     const [refreshToken, setRefreshToken] = useState()
     const [expiresIn, setExpiresIn] = useState()
-    console.log(accessToken)
 
+    //Send post request to server endpoint with auth code to get short-lived access token
     useEffect(() =>{
       axios.post("http://localhost:3001/login", {
         code
       }).then(res => {
-        console.log(res.data)
-        setAccessToken(res.data.accessToken)
-        setRefreshToken(res.data.refreshToken)
-        setExpiresIn(res.data.expiresIn)
+        setAccessToken(res.data.access_token)
+        setRefreshToken(res.data.refresh_token)
+        setExpiresIn(res.data.expires_in)
         window.history.pushState({}, null, "/")
       }).catch(error => {
         console.error(error)
+        //On error redirect back to Login
         window.location = "/"
       })
     }, [code])

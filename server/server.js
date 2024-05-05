@@ -23,10 +23,8 @@ app.post("/login", (req, res) => {
     })
     .then(res => res.json())
     .then(data => {
-        // console.log(data)
+        console.log(data)
         res.json(data)
-        console.log(res)
-
     })
     .catch(error => console.error(error))
 })
