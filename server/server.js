@@ -14,7 +14,7 @@ app.post("/login", (req, res) => {
         Accept: "*/*",
         "Content-Type": "application/x-www-form-urlencoded",
       };
-    let bodyContent = `client_id=126068&client_secret=5bc418998152dd2f9801b27a9bfab19328a37c36&code=${code}&grant_type=authorization_code`;
+    let bodyContent = `client_id=125102&client_secret=baf7f62b9ccc8636309d04404f9673f3c8bc9f95&code=${code}&grant_type=authorization_code`;
 
     fetch("https://www.strava.com/oauth/token", {
         method: "POST",

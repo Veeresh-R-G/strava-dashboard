@@ -19,8 +19,9 @@ export default function Home({authCode}: {authCode: string}){
         let date = new Date()
 
         // Cannot be exact current timestamp
-        let after: number = (new Date().getTime() / 1000) - 60 // one min before
-        let before: number = new Date(date.getFullYear(), date.getMonth() + 1, 0).getTime()
+        let after: number = (Math.trunc(new Date(date.getFullYear(), date.getMonth() , 1).getTime() / 1000)) - 60 // one min before
+        //let after: number = new Date(date.getFullYear(), date.getMonth() - 1, 1).getTime()/1000
+        let before: number = new Date(date.getFullYear(), date.getMonth() + 1, 0).getTime()/1000
         console.log(after, before)
         try{
           const res = await axios.get(`https://www.strava.com/api/v3/athlete/activities?before=${before}&after=${after}&page=${page}&per_page=100`,
