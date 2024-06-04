@@ -1,19 +1,16 @@
-// Home.tsx
+'use client'
 import React from 'react';
-import Navbar from '@/components/navbar'; // Import the Navbar component
+import { ReactDOM } from 'react';
+import Login from '@/components/Login';
+import Home from '@/components/Home';
 
-const Home: React.FC = () => {
+//On auth user redirected back to index url with code as query paramater in URL
+const code = new URLSearchParams(window.location.search).get("code")
+
+const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Include the Navbar component */}
-      <Navbar />
-
-      {/* Main content */}
-      <main className="p-4">
-        April CHALLENGE WOOHOOO FILL SOME SHIT UP HERE
-      </main>
-    </div>
+    code ? <Home authCode={code}/> : <Login/>
   );
 }
 
-export default Home;
+export default App
