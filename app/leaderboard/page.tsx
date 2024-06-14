@@ -16,7 +16,7 @@ const Leaderboard: React.FC = () => {
   const [data, setData] = useState<MyObject[]>([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/get_stuff")
+    axios.get("https://strava-dashboard-git-main-veereshs-projects-a621c1ca.vercel.app/api/get_stuff")
       .then((res) => {
         let temp: MyObject[] = [];
         for (const [name, value] of Object.entries(res.data?.data)) {
