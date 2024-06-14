@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 
-const auth_url = "http://www.strava.com/oauth/authorize?client_id=125102&response_type=code&redirect_uri=https://strava-dashboard-3shtkgo72-veereshs-projects-a621c1ca.vercel.app&approval_prompt=force&scope=activity:read"
+const auth_url = "http://www.strava.com/oauth/authorize?client_id=125102&response_type=code&redirect_uri=https://strava-dashboard-mfx17yrmo-veereshs-projects-a621c1ca.vercel.app&approval_prompt=force&scope=activity:read"
 
 export default function Login() {
     return (
