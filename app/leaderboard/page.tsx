@@ -43,7 +43,7 @@ const Leaderboard: React.FC = () => {
           temp.push({ name: element.athelete_name, value: Number(element.total_kilometers) / 1000 });
         });
 
-        // console.log(res);
+        console.log(res.data);
 
         console.log(temp);
 
