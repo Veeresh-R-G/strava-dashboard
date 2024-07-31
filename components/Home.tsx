@@ -7,7 +7,6 @@ import axios from 'axios';
 export default function Home({ authCode }: { authCode: string }) {
   console.log("Auth Code: ", authCode);
 
-  let distance: number = 0
   const authInfo: any = useAuth(authCode)
   console.log("Auth Info : ", authInfo)
   let name: string = authInfo?.athlete.firstname + " " + authInfo?.athlete.lastname[0] + "."
@@ -51,10 +50,6 @@ export default function Home({ authCode }: { authCode: string }) {
           }).catch((err) => {
             console.error("Error updating distance", err.re)
           })
-
-
-
-          //TODO: Update DB with aggregated data
         })
       } catch (error) {
         console.error("Error fetching athlete data", error)

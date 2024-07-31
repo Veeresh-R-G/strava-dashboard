@@ -4,10 +4,10 @@ export async function PUT(req:[{athelete_name:string,total_kilometers:number}],r
         
     let formattedData : { athelete_name: string; total_kilometers: number }[] = req;
     try {
-        // Iterate over the formattedData array and construct an array of update operations
+     
         const updateOperations = formattedData.map(({ athelete_name  , total_kilometers }) => ({
-          where: { athlete_name: athelete_name }, // Filter runners by athleteName
-          data: { total_kilometers: total_kilometers }, // Update totalDistance for the matching runners
+          where: { athlete_name: athelete_name }, 
+          data: { total_kilometers: total_kilometers }, 
         }));
     
         // Use Prisma client to update multiple runners' total distances

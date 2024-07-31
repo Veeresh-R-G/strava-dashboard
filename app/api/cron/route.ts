@@ -1,13 +1,10 @@
-import axios, {AxiosResponse} from 'axios';
-import getAccessToken from "@/util/access_token"
 import prisma from '@/db';
 import { NextRequest, NextResponse } from 'next/server';
 
 
 export async function PUT(req : NextRequest) { // Add the 'Request' type as a parameter
   try {
-    
-    // console.log(accessToken);
+  
     const d = await req.json();
     console.log(d);
     
@@ -15,18 +12,14 @@ export async function PUT(req : NextRequest) { // Add the 'Request' type as a pa
       where: { athelete_name: d?.name },
       data: { total_kilometers : d?.distance },
     });
-
-    console.log('Updated runner:', updatedRunner);
+    // console.log(updatedRunner);
     
-  
-    return NextResponse.json({ 'request' : d, 'response' : updatedRunner });
+    return NextResponse.json({ 'message' : "Runner Updated Successfully !!!!", 'updated_runner' : updatedRunner });
 
 
   } catch (err : any) {
     console.error('Error updating runners:', err.response.data);
-
-    // Return an error response
-    return Response.error();
+    return NextResponse.json({ 'message' : "Error updating runner !!!!", 'error' : err.response.data });
   }
 };
 

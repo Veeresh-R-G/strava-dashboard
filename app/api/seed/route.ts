@@ -12,9 +12,6 @@ interface DataSchema {
 }
 
 export function GET(){
-    
-    
-   
     try{
     
      data.map( async (item : DataSchema) => {
