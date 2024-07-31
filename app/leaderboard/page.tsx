@@ -26,7 +26,7 @@ const Leaderboard: React.FC = () => {
   const [data, setData] = useState<MyObject[]>([]);
 
   useEffect(() => {
-    axios.get("strava-dashboard-ruby.vercel.app/api/get_stuff/")
+    axios.get("/api/get_stuff/")
       .then((res) => {
 
 
