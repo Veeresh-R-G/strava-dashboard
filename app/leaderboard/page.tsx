@@ -26,7 +26,13 @@ const Leaderboard: React.FC = () => {
   const [data, setData] = useState<MyObject[]>([]);
 
   useEffect(() => {
-    axios.get("/api/get_stuff/")
+    axios.get("/api/get_stuff/", {
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    })
       .then((res) => {
 
 
