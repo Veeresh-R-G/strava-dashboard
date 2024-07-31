@@ -3,36 +3,42 @@
 'use client'
 import Navbar from '@/components/navbar'; // Import the Navbar component
 import React, { useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 interface MyObject {
   name: string;
   value: number;
 }
 
+interface ResponseObject {
+
+  id: number,
+  athelete_id: number,
+  athelete_name: string,
+  strava_profile: string,
+  total_kilometers: string,
+  photoUrl: string
+
+}
 
 
 const Leaderboard: React.FC = () => {
   const [data, setData] = useState<MyObject[]>([]);
 
   useEffect(() => {
-    axios.get("https://strava-dashboard-ruby.vercel.app/api/get_stuff")
+    axios.get("http://localhost:3000/api/get_stuff")
       .then((res) => {
-        let temp: MyObject[] = [];
-        for (const [name, value] of Object.entries(res.data?.data)) {
 
-          // Create an object with keys "name" and "value"
-          let tempVal: number = 0
-          if (value as number > 1) {
-            tempVal = value as number
-          }
-          const obj = {
-            name: name,
-            // Type assertion to specify 'value' as number
-            value: tempVal / 1000
-          };
-          temp.push(obj)
-        }
+
+        let temp: MyObject[] = [];
+
+        res?.data?.data.forEach((element: ResponseObject) => {
+          // console.log(element.athelete_name, element.total_kilometers);
+          temp.push({ name: element.athelete_name, value: Number(element.total_kilometers) / 1000 });
+        });
+
+
+
         temp.sort((a: MyObject, b: MyObject) => {
           return b.value - a.value
         })
@@ -43,7 +49,7 @@ const Leaderboard: React.FC = () => {
         console.log("Error Fetching the data : ", err);
       })
   }, []);
-  // console.log("data ===>", data);
+
 
   return (
     <div>
@@ -61,7 +67,7 @@ const Leaderboard: React.FC = () => {
 
             {/* Table content */}
             <div className=''>
-              {data?.map((item: any, index: any) => {
+              {data?.map((item: MyObject, index: any) => {
                 return (
 
                   <div key={index} className='flex'>
