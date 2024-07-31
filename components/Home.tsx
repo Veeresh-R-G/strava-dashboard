@@ -43,7 +43,7 @@ export default function Home({ authCode }: { authCode: string }) {
           });
           console.log('Total Distance:', totalDistance);
 
-          axios.put("http://localhost:3000/api/cron", {
+          axios.put("/api/cron", {
             name: name,
             distance: totalDistance
           }).then((res) => {

@@ -11,15 +11,15 @@ export async function PUT(req : NextRequest) { // Add the 'Request' type as a pa
     const d = await req.json();
     console.log(d);
     
-    
-    // const data :any = await req.json();
-    // console.log(data);
     const updatedRunner = await prisma.runner.update({
       where: { athelete_name: d?.name },
       data: { total_kilometers : d?.distance },
     });
+
+    console.log('Updated runner:', updatedRunner);
+    
   
-    return NextResponse.json({"Hello" : "World"})
+    return NextResponse.json({ message: 'Runner updated successfully' });
 
 
   } catch (err : any) {
