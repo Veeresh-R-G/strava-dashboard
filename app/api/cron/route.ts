@@ -19,7 +19,7 @@ export async function PUT(req : NextRequest) { // Add the 'Request' type as a pa
     console.log('Updated runner:', updatedRunner);
     
   
-    return NextResponse.json({ message: 'Runner updated successfully' });
+    return NextResponse.json({ 'request' : d, 'response' : updatedRunner });
 
 
   } catch (err : any) {

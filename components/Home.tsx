@@ -47,7 +47,7 @@ export default function Home({ authCode }: { authCode: string }) {
             name: name,
             distance: totalDistance
           }).then((res) => {
-            console.log(res)
+            console.log(res.data)
           }).catch((err) => {
             console.error("Error updating distance", err.re)
           })
