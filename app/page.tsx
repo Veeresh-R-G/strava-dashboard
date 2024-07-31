@@ -36,7 +36,7 @@ const App = () => {
 
 
   return (
-    <div>
+    <div suppressHydrationWarning={true}>
       {
         code ? <Home authCode={code} /> : <Login />
 

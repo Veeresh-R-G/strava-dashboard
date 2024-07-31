@@ -21,10 +21,9 @@ model Metadata {
 
 model Runner {
   id               Int     @id @default(autoincrement())
-  athelete_id      Int
-  athelete_name    String  @unique
-  strava_profile   String
+  athelete_id      Int     @unique
+  athelete_name    String
   total_kilometers Decimal
-  // prog_kilometers  Float
   photoUrl         String
+  bio              String
 }

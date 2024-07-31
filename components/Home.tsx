@@ -1,15 +1,28 @@
 'use client'
+
+import { CircularProgress } from "@nextui-org/progress";
+import 'react-circular-progressbar/dist/styles.css';
+
 import React, { useEffect } from 'react';
 import Navbar from '@/components/navbar';
 import useAuth from "../util/useAuth"
 import axios from 'axios';
 
+
 export default function Home({ authCode }: { authCode: string }) {
-  console.log("Auth Code: ", authCode);
+
+  const [distance, setDistance] = React.useState(20)
+
+  //Get Auth Info
+  console.log(authCode);
 
   const authInfo: any = useAuth(authCode)
-  console.log("Auth Info : ", authInfo)
-  let name: string = authInfo?.athlete.firstname + " " + authInfo?.athlete.lastname[0] + "."
+  console.log(authInfo)
+
+  //Setting the Name
+  const firstName = authInfo?.athlete?.firstname ? authInfo?.athlete?.firstname : "<FirstName>"
+  const lastName = authInfo?.athlete?.lastname ? authInfo?.athlete?.lastname : "<LastName>"
+  let name: string = firstName + " " + lastName
 
 
   const accessToken: string = authInfo?.access_token
@@ -41,10 +54,16 @@ export default function Home({ authCode }: { authCode: string }) {
             }
           });
           console.log('Total Distance:', totalDistance);
+          setDistance(totalDistance / 1000)
 
+          localStorage.setItem("bel_bullets_name", name);
           axios.put("/api/cron", {
+
+            athelete_id: Number(authInfo?.athlete?.id),
             name: name,
-            distance: totalDistance
+            distance: totalDistance,
+            photoURL: authInfo?.athlete?.profile,
+            bio: authInfo?.athlete?.bio
           }).then((res) => {
             console.log(res.data)
           }).catch((err) => {
@@ -58,18 +77,42 @@ export default function Home({ authCode }: { authCode: string }) {
 
     const data = fetchAthleteActivities()
     console.log(data)
-  }, [accessToken, name])
+
+  }, [accessToken, authInfo?.athlete?.bio, authInfo?.athlete?.id, authInfo?.athlete?.profile, firstName, lastName, name])
 
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
-      <div>
-        Welcome to your profile Page
-
+      <div className="flex items-center justify-center">
+        <div>
+          <div className="font-semibold text-xl">
+            Welcome to your Profile
+          </div>
+          <br />
+          <div className="flex justify-center items-center">
+            <CircularProgress
+              classNames={{
+                svg: "w-36 h-36",
+                indicator: "bg-blue-700",
+                track: "bg-blue-200",
+                value: "text-2xl font-semibold text-blue-700",
+              }}
+              value={distance}
+              strokeWidth={4}
+              showValueLabel={true}
+            />
+          </div>
+          <div>
+            <div>--- {localStorage.getItem("bel_bullets_name")} ---</div>
+            <div>
+              Distance Convered : {distance} kms (approx)
+            </div>
+          </div>
+          <div>
+            <button className='p-3 bg-black text-white rounded-xl' onClick={() => window.location.href = '/leaderboard'}>Group Leaderboard</button>
+          </div>
+        </div>
       </div>
-      {name}
-      {accessToken}
-      <button className='p-3 bg-black text-white rounded-xl' onClick={() => window.location.href = '/leaderboard'}>Group Leaderboard</button>
     </div>
   );
 }

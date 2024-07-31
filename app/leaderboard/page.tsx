@@ -52,7 +52,7 @@ const Leaderboard: React.FC = () => {
 
 
   return (
-    <div>
+    <div suppressHydrationWarning={true}>
       <Navbar />
       {/* {JSON.stringify(data)} */}
       {data.length !== 0 ?

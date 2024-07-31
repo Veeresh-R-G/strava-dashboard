@@ -19,7 +19,7 @@ export function GET(){
              data:{
                  athelete_id: 1,
                  athelete_name: item.firstname + " " + item.lastname,
-                 strava_profile: "hola",
+                 bio: "I am a runner",
                  total_kilometers: 0,
                  photoUrl: "pikachu"     
                 }

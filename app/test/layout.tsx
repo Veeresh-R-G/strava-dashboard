@@ -7,10 +7,7 @@ function TestLayout(
 ) {
     return (
         <div className='flex justify-center items-center min-h-screen'>
-            <header className=''>
-                TestLayout
 
-            </header>
             {children}
         </div>
     )
