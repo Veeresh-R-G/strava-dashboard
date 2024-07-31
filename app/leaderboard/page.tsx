@@ -37,6 +37,9 @@ const Leaderboard: React.FC = () => {
           temp.push({ name: element.athelete_name, value: Number(element.total_kilometers) / 1000 });
         });
 
+        // console.log(res);
+
+        console.log(temp);
 
 
         temp.sort((a: MyObject, b: MyObject) => {
@@ -50,6 +53,7 @@ const Leaderboard: React.FC = () => {
       })
   }, []);
 
+  console.log("data for leaderboard ----> ", data);
 
   return (
     <div suppressHydrationWarning={true}>
