@@ -7,17 +7,16 @@ import React, { useEffect } from 'react';
 import Navbar from '@/components/navbar';
 import useAuth from "../util/useAuth"
 import axios from 'axios';
+import toast from "react-hot-toast";
 
 
 export default function Home({ authCode }: { authCode: string }) {
 
-  const [distance, setDistance] = React.useState(20)
+  const [distance, setDistance] = React.useState(-1)
 
   //Get Auth Info
-  console.log(authCode);
-
   const authInfo: any = useAuth(authCode)
-  console.log(authInfo)
+
 
   //Setting the Name
   const firstName = authInfo?.athlete?.firstname ? authInfo?.athlete?.firstname : "<FirstName>"
@@ -44,7 +43,8 @@ export default function Home({ authCode }: { authCode: string }) {
             headers: { 'Authorization': `Bearer ${accessToken}` }
           }
         ).then(res => {
-          console.log(res.data)
+
+          res.status === 200 && toast.success("Data fetched 🎉");
           const activities = res.data;
           let totalDistance = 0;
 
@@ -53,7 +53,7 @@ export default function Home({ authCode }: { authCode: string }) {
               totalDistance += activity.distance;
             }
           });
-          console.log('Total Distance:', totalDistance);
+          // console.log('Total Distance:', totalDistance);
           setDistance(totalDistance / 1000)
 
           localStorage.setItem("bel_bullets_name", name);
@@ -65,7 +65,7 @@ export default function Home({ authCode }: { authCode: string }) {
             photoURL: authInfo?.athlete?.profile,
             bio: authInfo?.athlete?.bio
           }).then((res) => {
-            console.log(res.data)
+            toast.success("Distance Updated")
           }).catch((err) => {
             console.error("Error updating distance", err.re)
           })
@@ -75,43 +75,48 @@ export default function Home({ authCode }: { authCode: string }) {
       }
     }
 
-    const data = fetchAthleteActivities()
-    console.log(data)
+    fetchAthleteActivities()
+
 
   }, [accessToken, authInfo?.athlete?.bio, authInfo?.athlete?.id, authInfo?.athlete?.profile, firstName, lastName, name])
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div suppressHydrationWarning={true} className="min-h-screen bg-gray-100">
       <Navbar />
+
+
       <div className="flex items-center justify-center">
-        <div>
-          <div className="font-semibold text-xl">
-            Welcome to your Profile
-          </div>
-          <br />
-          <div className="flex justify-center items-center">
-            <CircularProgress
-              classNames={{
-                svg: "w-36 h-36",
-                indicator: "bg-blue-700",
-                track: "bg-blue-200",
-                value: "text-2xl font-semibold text-blue-700",
-              }}
-              value={distance}
-              strokeWidth={4}
-              showValueLabel={true}
-            />
-          </div>
+        {distance === -1 ?
+          <div>Loading</div> :
           <div>
-            <div>--- {localStorage.getItem("bel_bullets_name")} ---</div>
+            <div className="font-semibold text-xl">
+              Welcome to your Profile
+            </div>
+            <br />
+            <div className="flex justify-center items-center">
+              <CircularProgress
+                classNames={{
+                  svg: "w-36 h-36",
+                  indicator: "bg-blue-700",
+                  track: "bg-blue-200",
+                  value: "text-2xl font-semibold text-blue-700",
+                }}
+                value={distance}
+                strokeWidth={4}
+                showValueLabel={true}
+              />
+            </div>
             <div>
-              Distance Convered : {distance} kms (approx)
+              <div>{localStorage.getItem("bel_bullets_name")} </div>
+              <div>
+                Distance Convered : {distance} kms (approx)
+              </div>
+            </div>
+            <div>
+              <button className='p-2 text-sm md:text-md border-2 hover:bg-white hover:border-2 hover:border-orange-600 hover:text-orange-600 bg-orange-600 text-white rounded-xl' onClick={() => window.location.href = '/leaderboard'}>Group Leaderboard</button>
             </div>
           </div>
-          <div>
-            <button className='p-3 bg-black text-white rounded-xl' onClick={() => window.location.href = '/leaderboard'}>Group Leaderboard</button>
-          </div>
-        </div>
+        }
       </div>
     </div>
   );

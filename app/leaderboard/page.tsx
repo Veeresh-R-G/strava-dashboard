@@ -4,6 +4,7 @@
 import Navbar from '@/components/navbar'; // Import the Navbar component
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 interface MyObject {
   name: string;
@@ -35,6 +36,7 @@ const Leaderboard: React.FC = () => {
     })
       .then((res) => {
 
+        res.status === 200 && toast.success("Data Fetched Successfully 🎉");
 
         let temp: MyObject[] = [];
 
@@ -43,9 +45,6 @@ const Leaderboard: React.FC = () => {
           temp.push({ name: element.athelete_name, value: Number(element.total_kilometers) / 1000 });
         });
 
-        console.log(res.data);
-
-        console.log(temp);
 
 
         temp.sort((a: MyObject, b: MyObject) => {
@@ -59,14 +58,14 @@ const Leaderboard: React.FC = () => {
       })
   }, []);
 
-  console.log("data for leaderboard ----> ", data);
-
   return (
-    <div suppressHydrationWarning={true}>
+    <div className='' suppressHydrationWarning={true}>
       <Navbar />
       {/* {JSON.stringify(data)} */}
       {data.length !== 0 ?
-        <div className='flex items-center justify-center'>
+
+        <div className='mt-4 flex items-center justify-center'>
+
           <div className=''>
             {/* Table Headers */}
             <div className='flex'>
@@ -83,8 +82,8 @@ const Leaderboard: React.FC = () => {
                   <div key={index} className='flex'>
                     {/* {JSON.stringify(item)} */}
                     <div className='bg-gray-100/60 p-2 pl-10 border text-xs md:text-base border-t-0 border-r-0 border-l-0 border-gray-300'>{index + 1}.</div>
-                    <div className='bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300'>{item.name}</div>
-                    <div className='bg-gray-100/60 w-20 text-xs text-center md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300'>{String(item.value).slice(0, 5)}</div>
+                    <div className='bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300 py-2'>{item.name}</div>
+                    <div className='bg-gray-100/60 w-20 text-xs text-center md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300 py-2'>{String(item.value).slice(0, 5)}</div>
                   </div>
                 )
               })}

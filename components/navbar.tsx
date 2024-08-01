@@ -1,24 +1,28 @@
 // Navbar.tsx
 import React from 'react';
 import Image from 'next/image'; // Import the Image component
+import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="bg-gray-800 p-4">
+    <nav className="bg-orange-600 py-2 mb-5">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0">
             {/* Load the logo image using the Image component */}
-            <Image src="/1.png" alt="Logo" width={50} height={50} />
+
+            <Link href={"/"}>
+              <Image src="/logo_bg.jpeg" alt="Logo" width={80} height={80} style={{ width: '100%', height: 'auto' }} />
+            </Link>
           </div>
           <div className="hidden md:block">
             <ul className="flex space-x-4">
               <li><a href="/" className="text-white hover:text-gray-300 text-lg ">Home</a></li>
-              <li><a href="/leaderboard" className="text-white hover:text-gray-300">Leaderboard</a></li>
-              <li><a href="#" className="text-white hover:text-gray-300">About us</a></li>
-              <li><a href="#" className="text-white hover:text-gray-300">Contact</a></li>
+              <li><a href="/leaderboard" className="text-white hover:text-gray-300 text-lg">Leaderboard</a></li>
+              <li><a href="#" className="text-white hover:text-gray-300 text-lg">About us</a></li>
+              <li><a href="#" className="text-white hover:text-gray-300 text-lg">Contact</a></li>
               {/* Add Strava icon linking to the club's Strava page */}
-              <li>
+              <li className='border-4 border-white rounded-2xl'>
                 <a href="https://www.strava.com/clubs/belbullets" target="_blank" rel="noopener noreferrer">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" id="strava">
                     <path fill="#F04F28" d="M15 30C6.717 30 0 23.283 0 15S6.717 0 15 0s15 6.717 15 15-6.717 15-15 15Z"></path>

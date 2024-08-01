@@ -12,7 +12,7 @@ export async function GET(req : NextRequest, res : NextResponse){
       
       console.log(resp);
       
-      return NextResponse.json({"data" : resp ,"message":"All Runners data seeded ✅"}, {status:200})
+      return NextResponse.json({"data" : resp ,"message":"All Runners data fetched ✅"}, {status:200})
   }
   catch (error: any) {
       console.log('Error fetching data:', error);

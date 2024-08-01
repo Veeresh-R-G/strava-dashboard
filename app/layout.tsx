@@ -3,6 +3,7 @@
 import { Inter } from "next/font/google";
 import "./global.css";
 import { NextUIProvider } from "@nextui-org/react";
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <NextUIProvider>
           {children}
         </NextUIProvider>
+        <Toaster />
       </body>
     </html>
   );
