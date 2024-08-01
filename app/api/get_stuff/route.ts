@@ -1,8 +1,9 @@
 
 import prisma from '@/db';
+import { NextRequest, NextResponse } from 'next/server';
 
 
-export async function GET(){
+export async function GET(req : NextRequest, res : NextResponse){
     try{
 
       console.log("/get_stuff");
@@ -11,7 +12,7 @@ export async function GET(){
       
       console.log(resp);
       
-      return Response.json({"data" : resp, "message":"All Runners data fetched ✅"})
+      return NextResponse.json({"data" : resp ,"message":"All Runners data seeded ✅"}, {status:200})
   }
   catch (error: any) {
       console.log('Error fetching data:', error);
