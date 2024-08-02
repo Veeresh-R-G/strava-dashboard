@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="bg-orange-600 py-2 mb-5">
+    <nav className="bg-black py-2 mb-5">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0">
