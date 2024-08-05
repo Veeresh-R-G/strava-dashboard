@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: [
+      "dgalywyr863hv.cloudfront.net",
+      "www.google.com",
+      "lh3.googleusercontent.com",
+    ],
+  },
   async headers() {
     return [
       {
