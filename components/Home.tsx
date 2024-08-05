@@ -57,7 +57,7 @@ export default function Home({ authCode }: { authCode: string }) {
           setDistance(totalDistance / 1000)
 
           localStorage.setItem("bel_bullets_name", name);
-          axios.put("/api/cron", {
+          axios.put("/api/getRunners", {
 
             athelete_id: Number(authInfo?.athlete?.id),
             name: name,
