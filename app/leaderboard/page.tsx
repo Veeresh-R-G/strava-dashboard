@@ -7,6 +7,8 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
 
+import { Pagination } from "@nextui-org/react";
+
 interface MyObject {
   name: string;
   value: number;
@@ -27,6 +29,8 @@ interface ResponseObject {
 
 const Leaderboard: React.FC = () => {
   const [data, setData] = useState<MyObject[]>([]);
+  const [per_page, setPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     axios.get("/api/get_stuff/", {
@@ -61,15 +65,25 @@ const Leaderboard: React.FC = () => {
   }, []);
 
 
-  // console.log(data);
+  // console.log(data.length);
 
   return (
     <div className='' suppressHydrationWarning={true}>
       <Navbar />
       {/* {JSON.stringify(data)} */}
+
+      <div className='flex justify-center'>
+        <Pagination total={Math.ceil(data?.length / per_page)} initialPage={currentPage} onChange={(page) => {
+          setCurrentPage(page)
+        }} />
+
+      </div>
+
       {data.length !== 0 ?
 
         <div className='mt-4 flex items-center justify-center'>
+
+
 
           <div className=''>
             {/* Table Headers */}
@@ -82,12 +96,12 @@ const Leaderboard: React.FC = () => {
 
             {/* Table content */}
             <div className=''>
-              {data?.map((item: MyObject, index: any) => {
+              {data?.slice((currentPage - 1) * (per_page), ((currentPage - 1) * (per_page)) + per_page).map((item: MyObject, index: number) => {
                 return (
 
                   <div key={index} className='flex'>
                     {/* {JSON.stringify(item)} */}
-                    <div className='bg-gray-100/60 p-2 pl-10 border text-xs md:text-base border-t-0 border-r-0 border-l-0 border-gray-300'>{index + 1}.</div>
+                    <div className='bg-gray-100/60 p-2 pl-10 border text-xs md:text-base border-t-0 border-r-0 border-l-0 border-gray-300'>{((currentPage - 1) * (per_page)) + index + 1}.</div>
                     <div className='bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300 py-2'>{item.name}</div>
                     <div className='bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300 py-2 flex justify-center'>
                       <Image src={item.photo} alt="photo" width={40} height={40} className='rounded-full' />
@@ -101,6 +115,8 @@ const Leaderboard: React.FC = () => {
         </div> : <div>
           Loading
         </div>}
+
+
     </div>
   );
 };
