@@ -1,13 +1,15 @@
 'use client'
 
-import { CircularProgress } from "@nextui-org/progress";
-import 'react-circular-progressbar/dist/styles.css';
-
 import React, { useEffect } from 'react';
+
 import Navbar from '@/components/navbar';
 import useAuth from "../util/useAuth"
+
 import axios from 'axios';
 import toast from "react-hot-toast";
+import { CircularProgress } from "@nextui-org/progress";
+
+import 'react-circular-progressbar/dist/styles.css';
 
 
 export default function Home({ authCode }: { authCode: string }) {

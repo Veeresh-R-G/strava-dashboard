@@ -1,13 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Leaderboard.tsx
 'use client'
-import Navbar from '@/components/navbar'; // Import the Navbar component
 import React, { useEffect, useState } from 'react';
+
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
 
+import Navbar from '@/components/navbar';
+
+import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
 import { Pagination } from "@nextui-org/react";
+import { FaTrophy } from "react-icons/fa";
 
 interface MyObject {
   name: string;
@@ -51,8 +55,6 @@ const Leaderboard: React.FC = () => {
           temp.push({ name: element.athelete_name, value: Number(element.total_kilometers) / 1000, photo: element.photoUrl });
         });
 
-
-
         temp.sort((a: MyObject, b: MyObject) => {
           return b.value - a.value
         })
@@ -84,6 +86,9 @@ const Leaderboard: React.FC = () => {
         <div className='mt-4 flex items-center justify-center'>
 
 
+          {
+            new Date().getDate() === new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate() ? <Fireworks autorun={{ speed: 3 }} /> : ""
+          }
 
           <div className=''>
             {/* Table Headers */}
@@ -100,9 +105,13 @@ const Leaderboard: React.FC = () => {
                 return (
 
                   <div key={index} className='flex'>
-                    {/* {JSON.stringify(item)} */}
                     <div className='bg-gray-100/60 p-2 pl-10 border text-xs md:text-base border-t-0 border-r-0 border-l-0 border-gray-300'>{((currentPage - 1) * (per_page)) + index + 1}.</div>
-                    <div className='bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300 py-2'>{item.name}</div>
+                    <div className='bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300 py-2'>
+                      {currentPage === 1 ? index == 0 ? <FaTrophy className='text-amber-400 inline mr-2' /> : index == 1 ?
+                        <FaTrophy className='text-neutral-700 inline mr-2' /> : index === 2 ?
+                          <FaTrophy className='text-yellow-900 inline mr-2' /> : "" : ""}
+                      {item.name}
+                    </div>
                     <div className='bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300 py-2 flex justify-center'>
                       <Image src={item.photo} alt="photo" width={40} height={40} className='rounded-full' />
                     </div>
@@ -111,12 +120,13 @@ const Leaderboard: React.FC = () => {
                 )
               })}
             </div>
+
           </div>
+
         </div> : <div>
           Loading
-        </div>}
-
-
+        </div>
+      }
     </div>
   );
 };
