@@ -16,7 +16,6 @@ interface Runner {
 
 export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'Request' type as a parameter
   try {
-    console.log(await req.json())
     console.log("entering")
     const {
       athelete_id,
