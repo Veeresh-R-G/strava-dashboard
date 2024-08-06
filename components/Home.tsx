@@ -62,8 +62,8 @@ export default function Home({ authCode }: { authCode: string }) {
             athelete_id: Number(authInfo?.athlete?.id),
             name: name,
             distance: totalDistance,
-            photoURL: authInfo?.athlete?.profile,
-            bio: authInfo?.athlete?.bio
+            photoURL: authInfo?.athlete?.profile ?? 'https://i.ibb.co/dbfxqvY/png-transparent-computer-icons-running-avatar-heroes-text-sport-removebg-preview.png',
+            bio: authInfo?.athlete?.bio ?? "No bio available"
           }).then((res) => {
             toast.success("Distance Updated")
           }).catch((err) => {
