@@ -26,4 +26,8 @@ model Runner {
   total_kilometers Decimal
   photoUrl         String
   bio              String
+  accessToken      String
+  refreshToken     String
+  expiresAt        Int
+  phNumber         String
 }

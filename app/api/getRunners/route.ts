@@ -7,21 +7,30 @@ interface Runner {
   name: string,
   distance: number,
   photoURL: string,
-  bio: string
+  bio: string,
+  accessToken: string,
+  refreshToken: string,
+  expiresAt: number,
+  phNumber: string
 }
 
 export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'Request' type as a parameter
   try {
-  
+    console.log(await req.json())
+    console.log("entering")
     const {
       athelete_id,
       name,
       distance,
       photoURL,
-      bio
+      bio,
+      accessToken,
+      refreshToken,
+      expiresAt,
+      phNumber
     } = await req.json();
 
-    
+    console.log("hi")
     try{
       const runner = await prisma.runner.findFirst({
               where: {
@@ -29,13 +38,18 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
         });     
 
     if(!runner){
+        console.log("Creating new runner");
         const resp = await prisma.runner.create({
           data: {
             athelete_id: athelete_id,
             athelete_name: name,
             total_kilometers: distance,
             photoUrl: photoURL,
-            bio: bio
+            bio: bio,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            expiresAt: expiresAt,
+            phNumber: phNumber
           }
         })
         return Response.json({ 'message' : "Runner created successfully", 'runner' : resp, status: 204 });
@@ -47,6 +61,9 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
       },
       data:{
         total_kilometers: distance,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        expiresAt: expiresAt
       }
     })
 

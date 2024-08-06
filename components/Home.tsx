@@ -19,6 +19,7 @@ export default function Home({ authCode }: { authCode: string }) {
 
 
   //Setting the Name
+  console.log(authInfo)
   const firstName = authInfo?.athlete?.firstname ? authInfo?.athlete?.firstname : "<FirstName>"
   const lastName = authInfo?.athlete?.lastname ? authInfo?.athlete?.lastname : "<LastName>"
   let name: string = firstName + " " + lastName
@@ -38,6 +39,7 @@ export default function Home({ authCode }: { authCode: string }) {
       let before: number = new Date(date.getFullYear(), date.getMonth() + 1, 0).getTime() / 1000
 
       try {
+        console.log(authInfo.refresh_token, authInfo.expires_at, authInfo.access_token)
         axios.get(`https://www.strava.com/api/v3/athlete/activities?before=${before}&after=${after}&page=${page}&per_page=100`,
           {
             headers: { 'Authorization': `Bearer ${accessToken}` }
@@ -63,7 +65,11 @@ export default function Home({ authCode }: { authCode: string }) {
             name: name,
             distance: totalDistance,
             photoURL: authInfo?.athlete?.profile ?? 'https://i.ibb.co/dbfxqvY/png-transparent-computer-icons-running-avatar-heroes-text-sport-removebg-preview.png',
-            bio: authInfo?.athlete?.bio ?? "No bio available"
+            bio: authInfo?.athlete?.bio ?? "No bio available" ,
+            accessToken: authInfo?.access_token,
+            refreshToken: authInfo?.refresh_token,
+            expiresAt: authInfo?.expires_at,
+            phNumber: ""
           }).then((res) => {
             toast.success("Distance Updated")
           }).catch((err) => {
