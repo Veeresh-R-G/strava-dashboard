@@ -37,14 +37,21 @@ const refreshToken = async (runner) => {
   }
 };
 
-const fetchAthleteActivities = async (accessToken, before, after, page) => {
+const fetchAthleteActivities = async (runner, accessToken, before, after, page) => {
   try {
-    const response = await axios.get(`https://www.strava.com/api/v3/athlete/activities?before=${before}&after=${after}&page=${page}&per_page=100`, {
+    const response = await axios.get(`https://www.strava.com/api/v3/athlete/activities?before=${before}&after=${after}&page=${page}&per_page=200`, {
       headers: { 'Authorization': `Bearer ${accessToken}` },
     });
 
     if (response.status === 200) {
       console.log('Fetched athlete activities:', response.data);
+      prisma.runner.update({
+        where : { id: runner.id },
+        data: {
+
+          total_kilometers : 
+        }
+      })
     }
   } catch (error) {
     console.error('Error fetching athlete activities:', error.response ? error.response.data : error.message);
@@ -65,14 +72,14 @@ cron.schedule('*/15 * * * *', async () => {
         let after = (Math.trunc(new Date(date.getFullYear(), date.getMonth(), 1).getTime() / 1000)) - 60 
         const page = 1;
 
-        await fetchAthleteActivities(newAccessToken, before, after, page);
+        await fetchAthleteActivities(runner, newAccessToken, before, after, page);
       }
     } else {
-      const before = Math.floor(Date.now() / 1000);
-      const after = before - (7 * 24 * 60 * 60);
+      const before = new Date(date.getFullYear(), date.getMonth() + 1, 0).getTime() / 1000
+      let after = (Math.trunc(new Date(date.getFullYear(), date.getMonth(), 1).getTime() / 1000)) - 60
       const page = 1;
 
-      await fetchAthleteActivities(runner.access_token, before, after, page);
+      await fetchAthleteActivities(runner, runner.access_token, before, after, page);
     }
   }
 });
