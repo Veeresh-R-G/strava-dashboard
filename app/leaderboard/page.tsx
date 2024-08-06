@@ -85,7 +85,6 @@ const Leaderboard: React.FC = () => {
 
         <div className='mt-4 flex items-center justify-center'>
 
-
           {
             new Date().getDate() === new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate() ? <Fireworks autorun={{ speed: 3 }} /> : ""
           }
