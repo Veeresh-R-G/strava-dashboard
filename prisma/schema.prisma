@@ -19,6 +19,16 @@ model Metadata {
   total_distance      Float
 }
 
+model Runner_dev {
+  id               Int     @id @default(autoincrement())
+  athelete_id      Int     @unique
+  athelete_name    String
+  total_kilometers Decimal
+  photoUrl         String
+  bio              String
+  phone            String
+}
+
 model Runner {
   id               Int     @id @default(autoincrement())
   athelete_id      Int     @unique
