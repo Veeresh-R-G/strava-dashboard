@@ -13,12 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Metadata {
-  id                  Int   @id @default(autoincrement())
-  previous_activities Int
-  total_distance      Float
-}
-
 model Runner {
   id               Int     @id @default(autoincrement())
   athelete_id      Int     @unique
@@ -26,4 +20,8 @@ model Runner {
   total_kilometers Decimal
   photoUrl         String
   bio              String
+  accessToken      String
+  refreshToken     String
+  expiresAt        Int
+  phNumber         String
 }
