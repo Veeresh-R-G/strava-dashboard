@@ -54,6 +54,8 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
         return Response.json({ 'message' : "Runner created successfully", 'runner' : resp, status: 204 });
     }
 
+    
+
     const resp = await prisma.runner.update({
       where: {
         athelete_id: athelete_id
