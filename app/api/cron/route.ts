@@ -1,7 +1,11 @@
 
 import prisma from "@/db";
 import axios from "axios";
+import {Twilio} from 'twilio';
 
+
+
+const client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 interface RUNNER{
     athlete_id: number,
@@ -44,13 +48,61 @@ const fetchAthleteActivities = async (
             totalDistance += activity.distance;
           }
         });
-  
-        prisma.runner.update({
+        
+        const prev_leaderboard = await prisma.runner.findMany({
+          orderBy:{
+            total_kilometers : 'desc'
+          }
+        });
+    
+        const athlete = prev_leaderboard.find((runner) => runner.athelete_id === runner.athelete_id);
+     
+        await prisma.runner.update({
           where: { id: runner.athlete_id },
           data: {
             total_kilometers : totalDistance,
           },
         });
+    
+        console.log("Runner updated successfully 🎆");
+        
+    
+        const new_leaderboard = await prisma.runner.findMany({
+          orderBy:{
+            total_kilometers: 'desc'
+          }
+        })
+       
+        const new_athlete = new_leaderboard.find((runner) => runner.athelete_id === runner.athelete_id);
+       
+        const oldRank = athlete ? prev_leaderboard.indexOf(athlete) : -1;
+        const newRank =  new_athlete ? new_leaderboard.indexOf(new_athlete) : -1;
+        
+    
+        if(oldRank !== -1 && newRank !== -1 && oldRank !== newRank && newRank < oldRank){
+    
+          for (let index = newRank + 1; index <= oldRank ; index++) {
+            
+            const phone = new_leaderboard[index].phNumber;
+    
+            if(phone === "" || phone === null || phone === undefined){
+              continue;
+            }
+    
+            client.messages
+              .create({
+                body: `You have been overtaken by ${name} in the leaderboard. Keep running 🏃‍♂️🏃‍♂️🏃‍♂️`,
+                from: 'whatsapp:+14155238886',
+                to: `whatsapp:+91${phone}`
+                })
+                .then(message => console.log(message.sid))
+                .catch(err => console.log(err));
+              
+            console.log(`Message sent to ${phone}`);
+          }
+        }
+
+        
 
         console.log("ACTIVITIES UPDATING");
       }

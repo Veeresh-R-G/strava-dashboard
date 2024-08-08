@@ -73,7 +73,7 @@ const fetchAthleteActivities = async (
         }
       });
 
-      prisma.runner_dev.update({
+      await prisma.runner_dev.update({
         where: { id: runner_dev.id },
         data: {
           totalDistance,

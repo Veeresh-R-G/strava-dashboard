@@ -11,7 +11,7 @@ export async function GET(req : NextRequest){
         return Response.json({message: "Not Authorized, macha, have some shame !!!!"})
     }
      
-    prisma.$queryRaw`DROP TABLE "Runner"`;
+   await prisma.$queryRaw`DROP TABLE "Runner"`;
 
     return Response.json({message: "Table Dropped Successfully"})
 }
