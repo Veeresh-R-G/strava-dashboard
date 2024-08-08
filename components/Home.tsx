@@ -67,7 +67,7 @@ export default function Home({ authCode }: { authCode: string }) {
             name: name,
             distance: totalDistance,
             photoURL: authInfo?.athlete?.profile ?? 'https://i.ibb.co/dbfxqvY/png-transparent-computer-icons-running-avatar-heroes-text-sport-removebg-preview.png',
-            bio: authInfo?.athlete?.bio ?? "No bio available" ,
+            bio: authInfo?.athlete?.bio ?? "No bio available",
             accessToken: authInfo?.access_token,
             refreshToken: authInfo?.refresh_token,
             expiresAt: authInfo?.expires_at,
@@ -86,7 +86,7 @@ export default function Home({ authCode }: { authCode: string }) {
     fetchAthleteActivities()
 
 
-  }, [accessToken, authInfo?.athlete?.bio, authInfo?.athlete?.id, authInfo?.athlete?.profile, firstName, lastName, name])
+  }, [accessToken, authInfo.access_token, authInfo?.athlete?.bio, authInfo?.athlete?.id, authInfo?.athlete?.profile, authInfo.expires_at, authInfo.refresh_token, firstName, lastName, name])
 
   return (
     <div suppressHydrationWarning={true} className="min-h-screen bg-gray-100">
