@@ -21,7 +21,7 @@ export default function Home({ authCode }: { authCode: string }) {
 
 
   //Setting the Name
-  console.log(authInfo)
+  console.log("authinfo :", authInfo)
   const firstName = authInfo?.athlete?.firstname ? authInfo?.athlete?.firstname : "<FirstName>"
   const lastName = authInfo?.athlete?.lastname ? authInfo?.athlete?.lastname : "<LastName>"
   let name: string = firstName + " " + lastName
@@ -86,7 +86,7 @@ export default function Home({ authCode }: { authCode: string }) {
     fetchAthleteActivities()
 
 
-  }, [accessToken, authInfo.access_token, authInfo?.athlete?.bio, authInfo?.athlete?.id, authInfo?.athlete?.profile, authInfo.expires_at, authInfo.refresh_token, firstName, lastName, name])
+  }, [accessToken, authInfo?.access_token, authInfo?.athlete?.bio, authInfo?.athlete?.id, authInfo?.athlete?.profile, authInfo?.expires_at, authInfo?.refresh_token, firstName, lastName, name])
 
   return (
     <div suppressHydrationWarning={true} className="min-h-screen bg-gray-100">

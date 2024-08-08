@@ -9,7 +9,7 @@ const client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUT
 
 export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'Request' type as a parameter
   try {
-    console.log("entering")
+   
     const {
       athelete_id,
       name,
@@ -81,7 +81,11 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
    
     const oldRank = athlete ? prev_leaderboard.indexOf(athlete) : -1;
     const newRank =  new_athlete ? new_leaderboard.indexOf(new_athlete) : -1;
-   
+    
+    console.log("Old Rank: ", oldRank);
+    console.log("New Rank: ", newRank);
+    
+
     if(oldRank !== -1 && newRank !== -1 && oldRank !== newRank && newRank < oldRank){
 
       for (let index = newRank + 1; index <= oldRank ; index++) {
