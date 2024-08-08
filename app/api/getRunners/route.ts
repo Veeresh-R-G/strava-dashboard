@@ -1,18 +1,11 @@
 import prisma from '@/db';
 import { NextRequest, NextResponse } from 'next/server';
+import {Twilio} from 'twilio';
 
 
-interface Runner {
-  athelete_id: number,
-  name: string,
-  distance: number,
-  photoURL: string,
-  bio: string,
-  accessToken: string,
-  refreshToken: string,
-  expiresAt: number,
-  phNumber: string
-}
+
+const client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
 
 export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'Request' type as a parameter
   try {
@@ -54,7 +47,14 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
         return Response.json({ 'message' : "Runner created successfully", 'runner' : resp, status: 204 });
     }
 
-    
+    const prev_leaderboard = await prisma.runner.findMany({
+      orderBy:{
+        total_kilometers : 'desc'
+      }
+    });
+
+    const athlete = prev_leaderboard.find((runner) => runner.athelete_id === athelete_id);
+ 
 
     const resp = await prisma.runner.update({
       where: {
@@ -68,6 +68,44 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
       }
     })
 
+    console.log("Runner updated successfully 🎆");
+    
+
+    const new_leaderboard = await prisma.runner.findMany({
+      orderBy:{
+        total_kilometers: 'desc'
+      }
+    })
+   
+    const new_athlete = new_leaderboard.find((runner) => runner.athelete_id === athelete_id);
+   
+    const oldRank = athlete ? prev_leaderboard.indexOf(athlete) : -1;
+    const newRank =  new_athlete ? new_leaderboard.indexOf(new_athlete) : -1;
+   
+    if(oldRank !== -1 && newRank !== -1 && oldRank !== newRank && newRank < oldRank){
+
+      for (let index = newRank + 1; index <= oldRank ; index++) {
+        
+        const phone = new_leaderboard[index].phNumber;
+
+        if(phone === "" || phone === null || phone === undefined){
+          continue;
+        }
+
+        client.messages
+          .create({
+            body: `You have been overtaken by ${name} in the leaderboard. Keep running 🏃‍♂️🏃‍♂️🏃‍♂️`,
+            from: 'whatsapp:+14155238886',
+            to: `whatsapp:+91${phone}`
+            })
+            .then(message => console.log(message.sid))
+            .catch(err => console.log(err));
+          
+        console.log(`Message sent to ${phone}`);
+      }
+    }
+
+  
     return Response.json({ 'message' : "Runner updated successfully", 'runner' : resp, status: 204 });
     
      
