@@ -10,9 +10,8 @@ interface Runner {
   bio: string
 }
 
-const accountSid = 'AC4c7214213e300093e7cced9f62c8c7e3';
-const authToken = '18b2486ee0439cfb0fc197c1fac0d151';
-const client = new Twilio(accountSid, authToken);
+
+const client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 
 export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'Request' type as a parameter
