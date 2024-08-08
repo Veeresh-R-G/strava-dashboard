@@ -98,7 +98,7 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
 
         client.messages
           .create({
-            body: `You have been overtaken by ${name} in the leaderboard. Keep running 🏃‍♂️🏃‍♂️🏃‍♂️`,
+            body: `Uh-Oh !You have been overtaken by ${name} in the leaderboard. Keep running 🏃‍♂️🏃‍♂️🏃‍♂️`,
             from: 'whatsapp:+14155238886',
             to: `whatsapp:+91${phone}`
             })
