@@ -51,6 +51,8 @@ const fetchAthleteActivities = async (
             total_kilometers : totalDistance,
           },
         });
+
+        console.log("ACTIVITIES UPDATING");
       }
     } catch (error) {
       console.error(
@@ -88,7 +90,9 @@ const refreshToken = async (runner : any) => {
             expiresAt: expires_at,
           },
         });
-  
+        
+        console.log("ACCESS TOKEN RETURNING");
+        
         return access_token;
       }
     } catch (error) {
@@ -133,4 +137,7 @@ export async function GET(){
       );
     }
   }
+
+
+  return Response.json({ 'message' : "Runner updated successfully", status: 200 });
 }
