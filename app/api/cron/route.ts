@@ -102,7 +102,7 @@ const refreshToken = async (runner : any) => {
   };
 
 
-
+export const dynamic = "force-dynamic";
 export async function GET(){
     const runners = await prisma.runner.findMany();
   const now = Math.floor(Date.now() / 1000);
