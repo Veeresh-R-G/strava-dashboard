@@ -3,15 +3,15 @@ const nextConfig = {
   images: {
     domains: [
       "dgalywyr863hv.cloudfront.net",
-      "www.google.com",
       "lh3.googleusercontent.com",
+      "graph.facebook.com",
     ],
   },
   async headers() {
     return [
       {
         // matching all API routes
-        source: "/api/get_stuff",
+        source: "/api/get_runners",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           { key: "Access-Control-Allow-Origin", value: "*" }, // replace this your actual origin

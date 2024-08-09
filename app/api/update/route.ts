@@ -7,7 +7,7 @@ import {Twilio} from 'twilio';
 const client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 
-export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'Request' type as a parameter
+export async function PUT(req : NextRequest) { // Add the 'Request' type as a parameter
   try {
    
     const {
@@ -22,7 +22,7 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
       phNumber
     } = await req.json();
 
-    console.log("hi")
+  
     try{
       const runner = await prisma.runner.findFirst({
               where: {
@@ -68,7 +68,6 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
       }
     })
 
-    console.log("Runner updated successfully 🎆");
     
 
     const new_leaderboard = await prisma.runner.findMany({
@@ -86,7 +85,7 @@ export async function PUT(req : NextRequest, res : NextResponse) { // Add the 'R
     console.log("New Rank: ", newRank);
     
 
-    if(oldRank !== -1 && newRank !== -1 && oldRank !== newRank && newRank < oldRank){
+    if(Number(new_athlete?.total_kilometers) !== 0 && oldRank !== -1 && newRank !== -1 && oldRank !== newRank && newRank < oldRank){
 
       for (let index = newRank + 1; index <= oldRank ; index++) {
         

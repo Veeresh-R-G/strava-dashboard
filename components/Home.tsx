@@ -2,15 +2,15 @@
 
 import React, { useEffect } from 'react';
 
-import Navbar from '@/components/navbar';
-import useAuth from "../util/useAuth"
 
 import axios from 'axios';
 import toast from "react-hot-toast";
 import { CircularProgress } from "@nextui-org/progress";
-
 import 'react-circular-progressbar/dist/styles.css';
 
+
+import Navbar from '@/components/navbar';
+import useAuth from "../util/useAuth"
 
 export default function Home({ authCode }: { authCode: string }) {
 
@@ -21,7 +21,7 @@ export default function Home({ authCode }: { authCode: string }) {
 
 
   //Setting the Name
-  console.log("authinfo :", authInfo)
+  // console.log("authinfo :", authInfo)
   const firstName = authInfo?.athlete?.firstname ? authInfo?.athlete?.firstname : "<FirstName>"
   const lastName = authInfo?.athlete?.lastname ? authInfo?.athlete?.lastname : "<LastName>"
   let name: string = firstName + " " + lastName
@@ -41,7 +41,7 @@ export default function Home({ authCode }: { authCode: string }) {
       let before: number = new Date(date.getFullYear(), date.getMonth() + 1, 0).getTime() / 1000
 
       try {
-        console.log(authInfo.refresh_token, authInfo.expires_at, authInfo.access_token)
+        // console.log(authInfo.refresh_token, authInfo.expires_at, authInfo.access_token)
         axios.get(`https://www.strava.com/api/v3/athlete/activities?before=${before}&after=${after}&page=${page}&per_page=100`,
           {
             headers: { 'Authorization': `Bearer ${accessToken}` }
@@ -61,7 +61,7 @@ export default function Home({ authCode }: { authCode: string }) {
           setDistance(totalDistance / 1000)
 
           localStorage.setItem("bel_bullets_name", name);
-          axios.put("/api/getRunners", {
+          axios.put("/api/update", {
 
             athelete_id: Number(authInfo?.athlete?.id),
             name: name,

@@ -1,25 +1,13 @@
 'use client'
-import React from 'react';
-import Login from '@/components/Login';
-import Home from '@/components/Home';
-// import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
-//On auth user redirected back to index url with code as query paramater in URL
 
+import Login from '@/components/Login';
+import Home from '@/components/Home';
 
 
 
 const App = () => {
-  // const code = new URLSearchParams(window.location.search).get("code")
-  // const router = useRouter();
-  // const [query, setQuery] = useState<any | null>(null);
-
-  // useEffect(() => {
-  //   if (router.isReady) {
-  //     setQuery(router.query);
-  //   }
-  // }, [router.isReady, router.query]);
 
   const [code, setCode] = useState<string | null>("")
 
@@ -32,7 +20,7 @@ const App = () => {
     }
   }, [code])
 
-  console.log(code);
+  // console.log(code);
 
 
   return (
@@ -42,9 +30,6 @@ const App = () => {
 
       }
     </div>
-    // <div>
-    //   hola {""}
-    // </div>
   );
 }
 
