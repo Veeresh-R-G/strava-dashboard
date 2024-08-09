@@ -1,11 +1,9 @@
 import prisma from '@/db';
 import { NextRequest, NextResponse } from 'next/server';
-import {Twilio} from 'twilio';
 
+import TwilioService from "@/util/twilio"
 
-
-const client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-
+const twilioService = new TwilioService();
 
 export async function PUT(req : NextRequest) { // Add the 'Request' type as a parameter
   try {
@@ -54,7 +52,7 @@ export async function PUT(req : NextRequest) { // Add the 'Request' type as a pa
     });
 
     const athlete = prev_leaderboard.find((runner) => runner.athelete_id === athelete_id);
- 
+    
 
     const resp = await prisma.runner.update({
       where: {
@@ -95,15 +93,7 @@ export async function PUT(req : NextRequest) { // Add the 'Request' type as a pa
           continue;
         }
 
-        client.messages
-          .create({
-            body: `Uh-Oh !You have been overtaken by ${name} in the leaderboard. Keep running 🏃‍♂️🏃‍♂️🏃‍♂️`,
-            from: 'whatsapp:+14155238886',
-            to: `whatsapp:+91${phone}`
-            })
-            .then(message => console.log(message.sid))
-            .catch(err => console.log(err));
-          
+        twilioService.sendWhatsappMessage(name, phone)
         console.log(`Message sent to ${phone}`);
       }
     }

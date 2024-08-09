@@ -1,11 +1,12 @@
 
 import prisma from "@/db";
 import axios from "axios";
-import {Twilio} from 'twilio';
 
 
+import TwilioService from "@/util/twilio";
+const twilioService = new TwilioService();
 
-const client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
 
 interface RUNNER{
     athlete_id: number,
@@ -89,15 +90,7 @@ const fetchAthleteActivities = async (
               continue;
             }
     
-            client.messages
-              .create({
-                body: `You have been overtaken by ${name} in the leaderboard. Keep running 🏃‍♂️🏃‍♂️🏃‍♂️`,
-                from: 'whatsapp:+14155238886',
-                to: `whatsapp:+91${phone}`
-                })
-                .then(message => console.log(message.sid))
-                .catch(err => console.log(err));
-              
+              twilioService.sendWhatsappMessage(runner.athlete_name, phone)
             console.log(`Message sent to ${phone}`);
           }
         }
