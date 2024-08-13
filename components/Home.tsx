@@ -2,19 +2,20 @@
 
 import React, { useEffect } from 'react';
 
-
 import axios from 'axios';
 import toast from "react-hot-toast";
 import { CircularProgress } from "@nextui-org/progress";
-import 'react-circular-progressbar/dist/styles.css';
-
+import { Spinner } from '@nextui-org/react';
 
 import Navbar from '@/components/navbar';
 import useAuth from "../util/useAuth"
 
+import 'react-circular-progressbar/dist/styles.css';
+
 export default function Home({ authCode }: { authCode: string }) {
 
   const [distance, setDistance] = React.useState(-1)
+  const spinnerColors: string[] = ["primary", "secondary", "success", "warning"];
 
   //Get Auth Info
   const authInfo: any = useAuth(authCode)
@@ -22,9 +23,9 @@ export default function Home({ authCode }: { authCode: string }) {
 
   //Setting the Name
   // console.log("authinfo :", authInfo)
-  const firstName = authInfo?.athlete?.firstname ? authInfo?.athlete?.firstname : "<FirstName>"
-  const lastName = authInfo?.athlete?.lastname ? authInfo?.athlete?.lastname : "<LastName>"
-  let name: string = firstName + " " + lastName
+  const firstName: string = authInfo?.athlete?.firstname ? authInfo?.athlete?.firstname : "<FirstName>"
+  const lastName: string = authInfo?.athlete?.lastname ? authInfo?.athlete?.lastname : "<LastName>"
+  const name: string = firstName + " " + lastName
 
 
   const accessToken: string = authInfo?.access_token
@@ -60,7 +61,7 @@ export default function Home({ authCode }: { authCode: string }) {
           // console.log('Total Distance:', totalDistance);
           setDistance(totalDistance / 1000)
 
-          localStorage.setItem("bel_bullets_name", name);
+          // localStorage.setItem("bel_bullets_name", name);
           axios.put("/api/update", {
 
             athelete_id: Number(authInfo?.athlete?.id),
@@ -95,7 +96,9 @@ export default function Home({ authCode }: { authCode: string }) {
 
       <div className="flex items-center justify-center">
         {distance === -1 ?
-          <div>Loading</div> :
+          <div>
+            <Spinner size='lg' label='Loading...' color={spinnerColors[Math.floor(Math.random() * spinnerColors.length)] as "primary" | "secondary" | "success" | "warning" | "current" | "white" | "default" | "danger" | undefined} />
+          </div> :
           <div>
             <div className="font-semibold text-xl">
               Welcome to your Profile
@@ -115,7 +118,7 @@ export default function Home({ authCode }: { authCode: string }) {
               />
             </div>
             <div>
-              <div>{localStorage.getItem("bel_bullets_name")} </div>
+              <div>{name} </div>
               <div>
                 Distance Convered : {distance} kms (approx)
               </div>

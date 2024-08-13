@@ -95,6 +95,7 @@ export async function PUT(req : NextRequest) { // Add the 'Request' type as a pa
 
         twilioService.sendWhatsappMessage(name, phone)
         console.log(`Message sent to ${phone}`);
+        
       }
     }
 

@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// Leaderboard.tsx
+
 'use client'
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import Image from 'next/image';
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
 import { Pagination } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import { FaTrophy } from "react-icons/fa";
 
 import Navbar from '@/components/navbar';
@@ -23,6 +24,8 @@ const Leaderboard: React.FC = () => {
   const [data, setData] = useState<MyObject[]>([]);
   const [per_page,] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const spinnerColors: string[] = ["primary", "secondary", "success", "warning"];
 
   useEffect(() => {
     axios.get("/api/get_runners/", {
@@ -49,7 +52,7 @@ const Leaderboard: React.FC = () => {
       {/* {JSON.stringify(data)} */}
 
       <div className='flex justify-center'>
-        <Pagination total={Math.ceil(data?.length / per_page)} initialPage={2} onChange={(page) => {
+        <Pagination total={Math.ceil(data?.length / per_page)} initialPage={1} onChange={(page) => {
           setCurrentPage(page)
         }} />
 
@@ -60,10 +63,10 @@ const Leaderboard: React.FC = () => {
         <div className='mt-4 flex items-center justify-center'>
 
           {
-            new Date().getDate() === new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate() ? <Fireworks autorun={{ speed: 3 }} /> : ""
+            new Date().getDate() === new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate() && <Fireworks autorun={{ speed: 3 }} />
           }
 
-          <div className=''>
+          <div className='leaderboard-table'>
             {/* Table Headers */}
             <div className='flex'>
               <div className='py-5 bg-gray-100/60 p-2 pl-10 text-xs md:text-base border border-t-0 border-r-0 border-l-0 border-gray-300'>#</div>
@@ -96,8 +99,10 @@ const Leaderboard: React.FC = () => {
 
           </div>
 
-        </div> : <div>
-          Loading
+        </div>
+        :
+        <div>
+          <Spinner size='lg' label='Loading...' color={spinnerColors[Math.floor(Math.random() * spinnerColors.length)] as "primary" | "secondary" | "success" | "warning" | "current" | "white" | "default" | "danger" | undefined} />
         </div>
       }
     </div>
