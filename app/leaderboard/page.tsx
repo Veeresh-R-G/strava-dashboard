@@ -12,7 +12,7 @@ import { Pagination } from "@nextui-org/react";
 import { Spinner } from "@nextui-org/react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 
-import Navbar from '@/components/navbar';
+import NavbarComponent from '@/components/Navbar';
 
 interface MyObject {
   athelete_name: string;
@@ -51,12 +51,12 @@ const Leaderboard = () => {
     <div className='min-w-max' suppressHydrationWarning={true}>
 
       {/* Navbar */}
-      <Navbar />
+      <NavbarComponent />
 
       {/* {JSON.stringify(data)} */}
 
       {/* Pagination Component */}
-      <div className='flex justify-center'>
+      <div className='flex justify-center mt-3'>
         <Pagination total={Math.ceil(data?.length / per_page)} initialPage={1} onChange={(page) => {
           setCurrentPage(page)
         }} />
