@@ -61,7 +61,7 @@ export default function Home({ authCode }: { authCode: string }) {
           // console.log('Total Distance:', totalDistance);
           setDistance(totalDistance / 1000)
 
-          // localStorage.setItem("bel_bullets_name", name);
+          localStorage.setItem("bel_bullets_name", name);
           axios.put("/api/update", {
 
             athelete_id: Number(authInfo?.athlete?.id),
@@ -118,7 +118,7 @@ export default function Home({ authCode }: { authCode: string }) {
               />
             </div>
             <div>
-              <div>{name} </div>
+              <div>{localStorage.getItem("bel_bullets_name")} </div>
               <div>
                 Distance Convered : {distance} kms (approx)
               </div>

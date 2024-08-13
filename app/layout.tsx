@@ -22,25 +22,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
-        <head>
-          {/* <!-- Google tag (gtag.js) --> */}
-          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-B6G3HC58XW"
-          ></Script>
-          <Script id="google-analytics">
+      <head>
+        {/* <!-- Google tag (gtag.js) --> */}
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-B6G3HC58XW"
+        ></Script>
+        <Script id="google-analytics">
 
-            {
+          {
 
-              `
+            `
     window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-B6G3HC58XW');
   `
-            }
-          </Script>
-        </head>
+          }
+        </Script>
+      </head>
+      <body className={`${inter.className}`} suppressHydrationWarning={true} suppressContentEditableWarning={true}>
         <NextUIProvider>
           {children}
         </NextUIProvider>

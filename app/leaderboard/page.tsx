@@ -7,9 +7,10 @@ import Image from 'next/image';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
+import { FaTrophy } from "react-icons/fa";
 import { Pagination } from "@nextui-org/react";
 import { Spinner } from "@nextui-org/react";
-import { FaTrophy } from "react-icons/fa";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 
 import Navbar from '@/components/navbar';
 
@@ -20,7 +21,7 @@ interface MyObject {
 }
 
 
-const Leaderboard: React.FC = () => {
+const Leaderboard = () => {
   const [data, setData] = useState<MyObject[]>([]);
   const [per_page,] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -47,10 +48,14 @@ const Leaderboard: React.FC = () => {
 
 
   return (
-    <div className='' suppressHydrationWarning={true}>
+    <div className='min-w-max' suppressHydrationWarning={true}>
+
+      {/* Navbar */}
       <Navbar />
+
       {/* {JSON.stringify(data)} */}
 
+      {/* Pagination Component */}
       <div className='flex justify-center'>
         <Pagination total={Math.ceil(data?.length / per_page)} initialPage={1} onChange={(page) => {
           setCurrentPage(page)
@@ -67,16 +72,41 @@ const Leaderboard: React.FC = () => {
           }
 
           <div className='leaderboard-table'>
-            {/* Table Headers */}
-            <div className='flex'>
-              <div className='py-5 bg-gray-100/60 p-2 pl-10 text-xs md:text-base border border-t-0 border-r-0 border-l-0 border-gray-300'>#</div>
-              <div className='py-5 bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300'>Name</div>
-              <div className='py-5 bg-gray-100/60 w-20 text-xs md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300'></div>
-              <div className='py-5 bg-gray-100/60 w-20 text-xs text-center md:text-base md:pl-10 md:w-48 border border-t-0 border-r-0 border-l-0 border-gray-300'>Distance</div>
-            </div>
+
+
+
+            <Table aria-label="" className=''>
+              <TableHeader>
+                <TableColumn>#</TableColumn>
+                <TableColumn>Name</TableColumn>
+                <TableColumn>{""}</TableColumn>
+                <TableColumn>Distance</TableColumn>
+              </TableHeader>
+              <TableBody>
+                {data?.slice((currentPage - 1) * (per_page), ((currentPage - 1) * (per_page)) + per_page).map((item: any, index: number) => {
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className=''>{((currentPage - 1) * (per_page)) + index + 1}.</TableCell>
+                      <TableCell className='text-wrap'> {currentPage === 1 ? index == 0 ? <FaTrophy className='text-amber-400 inline mr-2' /> : index == 1 ?
+                        <FaTrophy className='text-neutral-700 inline mr-2' /> : index === 2 ?
+                          <FaTrophy className='text-yellow-900 inline mr-2' /> : "" : ""}
+                        {item.athelete_name}
+                      </TableCell>
+                      <TableCell className=''>
+                        <Image src={item.photoUrl} alt="photo" width={40} height={40} className='rounded-full' />
+                      </TableCell>
+                      <TableCell className=''>
+                        {(String(Number(item.total_kilometers) / 1000)).slice(0, 5)}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+
+              </TableBody>
+            </Table>
 
             {/* Table content */}
-            <div className=''>
+            <div className='hidden'>
               {data?.slice((currentPage - 1) * (per_page), ((currentPage - 1) * (per_page)) + per_page).map((item: MyObject, index: number) => {
                 return (
 
@@ -98,6 +128,7 @@ const Leaderboard: React.FC = () => {
             </div>
 
           </div>
+
 
         </div>
         :
