@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { CircularProgress } from "@nextui-org/progress";
 import { Spinner } from '@nextui-org/react';
 
-import Navbar from '@/components/navbar';
+import NavbarComponent from '@/components/Navbar';
 import useAuth from "../util/useAuth"
 
 import 'react-circular-progressbar/dist/styles.css';
@@ -91,13 +91,13 @@ export default function Home({ authCode }: { authCode: string }) {
 
   return (
     <div suppressHydrationWarning={true} className="min-h-screen bg-gray-100">
-      <Navbar />
+      <NavbarComponent />
 
 
       <div className="flex items-center justify-center">
         {distance === -1 ?
           <div>
-            <Spinner size='lg' label='Loading...' color={spinnerColors[Math.floor(Math.random() * spinnerColors.length)] as "primary" | "secondary" | "success" | "warning" | "current" | "white" | "default" | "danger" | undefined} />
+            <Spinner className='mt-2' size='lg' label='Loading...' color={spinnerColors[Math.floor(Math.random() * spinnerColors.length)] as "primary" | "secondary" | "success" | "warning" | "current" | "white" | "default" | "danger" | undefined} />
           </div> :
           <div>
             <div className="font-semibold text-xl">
