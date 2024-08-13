@@ -1,44 +1,42 @@
-import { CircularProgress } from "@nextui-org/progress";
-const TestPage = () => {
-    let name = "Veeresh"
-    let distance = 10
-    return (
-        <div>
-            {/* Hello this is test page */}
-            <div>
+'use client'
 
-                <div>
-                    <div className="font-semibold text-xl">
-                        Welcome to your Profile
-                    </div>
-                    <br />
-                    <div className="flex justify-center items-center">
-                        <CircularProgress
-                            classNames={{
-                                svg: "w-36 h-36",
-                                indicator: "bg-blue-700",
-                                track: "bg-blue-200",
-                                value: "text-2xl font-semibold text-blue-700",
-                            }}
-                            value={distance}
-                            strokeWidth={4}
-                            showValueLabel={true}
-                        />
-                    </div>
-                    <div>
-                        <div>{name}</div>
-                        <div>
-                            Distance Convered : {distance} kms
-                        </div>
+import React from "react";
 
-                    </div>
-                </div>
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
 
-
-            </div>
-        </div>
-    )
+interface MyObject {
+    athelete_name: string;
+    total_kilometers: number;
+    photoUrl: string;
 }
 
-export default TestPage
+export default function App({ data }: { data: MyObject[] }) {
+    return (
+        <div className="mx-1 md:mx-0 md:w-2/3">
 
+            <Table aria-label="">
+                <TableHeader>
+                    <TableColumn>#</TableColumn>
+                    <TableColumn>Name</TableColumn>
+                    <TableColumn>{""}</TableColumn>
+                    <TableColumn>Distance</TableColumn>
+                </TableHeader>
+                <TableBody>
+
+                    <TableRow key="1">
+                        <TableCell>Tony Reichert</TableCell>
+                        <TableCell>CEO</TableCell>
+                        <TableCell>Active</TableCell>
+                        <TableCell>Active</TableCell>
+                    </TableRow>
+                    <TableRow key="2">
+                        <TableCell>Zoey Lang</TableCell>
+                        <TableCell>Technical Lead</TableCell>
+                        <TableCell>Technical Lead</TableCell>
+                        <TableCell>Paused</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </div>
+    );
+}

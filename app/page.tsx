@@ -24,7 +24,7 @@ const App = () => {
 
 
   return (
-    <div suppressHydrationWarning={true}>
+    <div suppressHydrationWarning={true} suppressContentEditableWarning={true}>
       {
         code ? <Home authCode={code} /> : <Login />
 

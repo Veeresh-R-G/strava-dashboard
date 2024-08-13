@@ -11,10 +11,10 @@
 
 ### TO DO
 
-- [ ] Navbar Modification
+- [ ] Navbar Modification - UI
 - [ ] Profile Page
 - [ ] Add Types to all variables (atleast, most of the code)
-- [ ] Table modification
+- [x] Table modification - UI
 - [ ] Securely Store the Tokens on the Database
 
 ### Assign your PR to any one of us

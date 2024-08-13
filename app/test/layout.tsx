@@ -6,8 +6,7 @@ function TestLayout(
     }
 ) {
     return (
-        <div className='flex justify-center items-center min-h-screen'>
-
+        <div className='flex justify-center' suppressHydrationWarning={true} suppressContentEditableWarning={true}>
             {children}
         </div>
     )
