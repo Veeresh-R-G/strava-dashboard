@@ -17,6 +17,24 @@
 - [x] Table modification - UI
 - [ ] Securely Store the Tokens on the Database
 
+### Regarding testing your components
+
+- Make sure you test your component in /test route and then integrate it with the project later on.
+- While merging, please push the /test component with the default template.
+
+```
+import React from "react";
+
+export default function App() {
+    return (
+        <div className="">
+            This is Test Component
+        </div>
+    );
+}
+
+```
+
 ### Assign your PR to any one of us
 
 - @Veeresh-R-G
