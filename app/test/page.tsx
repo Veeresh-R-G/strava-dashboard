@@ -4,13 +4,8 @@ import React from "react";
 
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
 
-interface MyObject {
-    athelete_name: string;
-    total_kilometers: number;
-    photoUrl: string;
-}
 
-export default function App({ data }: { data: MyObject[] }) {
+export default function App() {
     return (
         <div className="mx-1 md:mx-0 md:w-2/3">
 
