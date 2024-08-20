@@ -27,12 +27,12 @@ const NavbarComponent: React.FC = () => {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="/">
+          <Link color="foreground" href="/home">
             Home
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
-          <Link href="/leaderboard" color='foreground'>
+          <Link href="/" color='foreground'>
             Leaderboard
           </Link>
         </NavbarItem>
@@ -42,7 +42,7 @@ const NavbarComponent: React.FC = () => {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="/contact">
+          <Link color="foreground" href="https://www.instagram.com/belbullets/">
             Contact
           </Link>
         </NavbarItem>
