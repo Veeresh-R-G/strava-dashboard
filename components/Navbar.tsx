@@ -21,7 +21,7 @@ const NavbarComponent: React.FC = () => {
         className="sm:hidden"
       />
       <NavbarBrand>
-        <Link href="/">
+        <Link href="/home">
           <Image src="/logo.png" alt="ACME" width={110} height={110} />
         </Link>
       </NavbarBrand>

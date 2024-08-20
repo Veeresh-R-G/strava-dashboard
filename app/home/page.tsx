@@ -39,8 +39,7 @@ const RunClubHomepage = () => {
           <ol className="list-decimal list-inside text-sm sm:text-base text-gray-600">
             <li>Wipro Full Marathon </li>
             <li>Spartan Race</li>
-            <li>Emily Chen - 108 miles</li>
-            <li>Shubham - 100 miles</li>
+            <li>Salem run</li>
           </ol>
         </div>
       </section>
