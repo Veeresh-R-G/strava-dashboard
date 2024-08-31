@@ -1,4 +1,4 @@
-### Import Statements Ordering
+### Import Statements Order
 
 - Default imports
 - Imports from external packages (npm packages)
@@ -9,13 +9,21 @@
 
 - Check [NextUi Components](https://nextui.org/docs/components)
 
-### TO DO
+### To Do
 
-- [ ] Navbar Modification - UI
+- [ ] Activities calculation correction
+- [ ] Store monthly snapshots
+
+### In Progress
+
 - [ ] Profile Page
-- [ ] Add Types to all variables (atleast, most of the code)
-- [x] Table modification - UI
 - [ ] Securely Store the Tokens on the Database
+
+### Completed
+
+- [x] Add Types to all variables (atleast, most of the code)
+- [x] Navbar Modification - UI
+- [x] Table modification - UI
 
 ### Regarding testing your components
 
